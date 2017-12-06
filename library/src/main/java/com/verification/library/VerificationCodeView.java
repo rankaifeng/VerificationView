@@ -5,7 +5,9 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.PointF;
 import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -95,12 +97,22 @@ public class VerificationCodeView extends View {
 
         mPaint.setStyle(Paint.Style.FILL);
         mPaint.setStrokeWidth(6.0f);
-        mPaint.setColor(Color.RED);
-        canvas.drawLines(new float[]{0, 0, getWidth(), getHeight(),
-               100,0,getWidth(),getHeight(),130,0,getWidth(),getHeight(),250,0,getWidth(),getHeight(),
-        0,20,getWidth(),getHeight(),0,130,getWidth(),getHeight()}, mPaint);
-//        canvas.drawPoints(new float[]{60,600,68,620,80,590}, mPaint);//画多个点
-
+        mPaint.setTypeface(Typeface.DEFAULT_BOLD);
+        Random mRandom = new Random();
+        List<PointF> mPoints = new ArrayList<>();
+        // 生成干扰点坐标
+        for (int i = 0; i < 150; i++) {
+            PointF pointF = new PointF(mRandom.nextInt(getWidth()) + 10,
+                    mRandom.nextInt(getHeight()) + 10);
+            mPoints.add(pointF);
+        }
+        // 产生干扰效果1 -- 干扰点
+        for (PointF pointF : mPoints) {
+            mPaint.setARGB(255, mRandom.nextInt(200) + 20,
+                    mRandom.nextInt(200) + 20, mRandom.nextInt(200) + 20);
+            canvas.drawPoint(pointF.x, pointF.y, mPaint);
+        }
+        //canvas.drawPoints(new float[]{60,600,68,620,80,590}, mPaint);//画多个点
         /*重新设置画笔的颜色用于绘制中间的文字*/
         mPaint.setColor(mTextColor);
         /**
@@ -163,4 +175,18 @@ public class VerificationCodeView extends View {
         }
         return sb.toString();
     }
+
+    /**
+     * 判断验证码是否正确
+     *
+     * @param input
+     * @return
+     */
+    public boolean checkResult(String input) {
+        if (!input.equals(mTitleText)) {
+            return false;
+        }
+        return true;
+    }
+
 }
