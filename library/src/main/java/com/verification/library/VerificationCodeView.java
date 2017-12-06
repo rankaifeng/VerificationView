@@ -21,7 +21,7 @@ import java.util.Random;
 
 public class VerificationCodeView extends View {
     private Paint mPaint;
-    private Rect mBound;  
+    private Rect mBound;
     /**
      * 绘制文本内容
      */
