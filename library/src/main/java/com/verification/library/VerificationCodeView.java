@@ -88,10 +88,18 @@ public class VerificationCodeView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         /**
-         * 绘制黄色的背景
+         * 绘制背景
          */
         mPaint.setColor(mBackgroundColor);
         canvas.drawRect(0, 0, getMeasuredWidth(), getMeasuredHeight(), mPaint);
+
+        mPaint.setStyle(Paint.Style.FILL);
+        mPaint.setStrokeWidth(6.0f);
+        mPaint.setColor(Color.RED);
+        canvas.drawLines(new float[]{0, 0, getWidth(), getHeight(),
+               100,0,getWidth(),getHeight(),130,0,getWidth(),getHeight(),250,0,getWidth(),getHeight(),
+        0,20,getWidth(),getHeight(),0,130,getWidth(),getHeight()}, mPaint);
+//        canvas.drawPoints(new float[]{60,600,68,620,80,590}, mPaint);//画多个点
 
         /*重新设置画笔的颜色用于绘制中间的文字*/
         mPaint.setColor(mTextColor);
